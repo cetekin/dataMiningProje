@@ -1,0 +1,44 @@
+=== Run information ===
+
+Scheme:       weka.classifiers.lazy.IBk -K 1 -W 0 -A "weka.core.neighboursearch.LinearNNSearch -A \"weka.core.EuclideanDistance -R first-last\""
+Relation:     haberman-weka.filters.unsupervised.attribute.InterquartileRange-Rfirst-last-O3.0-E6.0-weka.filters.unsupervised.instance.RemoveWithValues-S0.0-C5-Llast-weka.filters.unsupervised.instance.RemoveWithValues-S0.0-C6-Llast-weka.filters.unsupervised.attribute.Remove-R5-6-weka.filters.unsupervised.attribute.NumericToNominal-R4
+Instances:    285
+Attributes:   4
+              age
+              year_of_op
+              num_of_pos_node
+              survival_status
+Test mode:    10-fold cross-validation
+
+=== Classifier model (full training set) ===
+
+IB1 instance-based classifier
+using 1 nearest neighbour(s) for classification
+
+
+Time taken to build model: 0 seconds
+
+=== Stratified cross-validation ===
+=== Summary ===
+
+Correctly Classified Instances         195               68.4211 %
+Incorrectly Classified Instances        90               31.5789 %
+Kappa statistic                          0.0949
+Mean absolute error                      0.3293
+Root mean squared error                  0.5653
+Relative absolute error                 89.4701 %
+Root relative squared error            131.9491 %
+Total Number of Instances              285     
+
+=== Detailed Accuracy By Class ===
+
+                 TP Rate  FP Rate  Precision  Recall   F-Measure  MCC      ROC Area  PRC Area  Class
+                 0,815    0,725    0,779      0,815    0,796      0,095    0,559     0,794     1
+                 0,275    0,185    0,322      0,275    0,297      0,095    0,559     0,274     2
+Weighted Avg.    0,684    0,594    0,668      0,684    0,675      0,095    0,559     0,668     
+
+=== Confusion Matrix ===
+
+   a   b   <-- classified as
+ 176  40 |   a = 1
+  50  19 |   b = 2

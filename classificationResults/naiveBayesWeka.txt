@@ -1,0 +1,67 @@
+=== Run information ===
+
+Scheme:       weka.classifiers.bayes.NaiveBayes 
+Relation:     haberman-weka.filters.unsupervised.attribute.InterquartileRange-Rfirst-last-O3.0-E6.0-weka.filters.unsupervised.instance.RemoveWithValues-S0.0-C5-Llast-weka.filters.unsupervised.instance.RemoveWithValues-S0.0-C6-Llast-weka.filters.unsupervised.attribute.Remove-R5-6-weka.filters.unsupervised.attribute.NumericToNominal-R4
+Instances:    285
+Attributes:   4
+              age
+              year_of_op
+              num_of_pos_node
+              survival_status
+Test mode:    10-fold cross-validation
+
+=== Classifier model (full training set) ===
+
+Naive Bayes Classifier
+
+                    Class
+Attribute               1       2
+                   (0.76)  (0.24)
+==================================
+age
+  mean              51.947 54.1522
+  std. dev.        11.0467 10.2438
+  weight sum           216      69
+  precision         1.1042  1.1042
+
+year_of_op
+  mean             62.8333 62.8261
+  std. dev.         3.2102   3.392
+  weight sum           216      69
+  precision              1       1
+
+num_of_pos_node
+  mean              1.8426  4.4348
+  std. dev.         3.2351   4.614
+  weight sum           216      69
+  precision              1       1
+
+
+
+Time taken to build model: 0.01 seconds
+
+=== Stratified cross-validation ===
+=== Summary ===
+
+Correctly Classified Instances         219               76.8421 %
+Incorrectly Classified Instances        66               23.1579 %
+Kappa statistic                          0.2234
+Mean absolute error                      0.3195
+Root mean squared error                  0.4249
+Relative absolute error                 86.8193 %
+Root relative squared error             99.1928 %
+Total Number of Instances              285     
+
+=== Detailed Accuracy By Class ===
+
+                 TP Rate  FP Rate  Precision  Recall   F-Measure  MCC      ROC Area  PRC Area  Class
+                 0,935    0,754    0,795      0,935    0,860      0,250    0,644     0,811     1
+                 0,246    0,065    0,548      0,246    0,340      0,250    0,644     0,396     2
+Weighted Avg.    0,768    0,587    0,736      0,768    0,734      0,250    0,644     0,710     
+
+=== Confusion Matrix ===
+
+   a   b   <-- classified as
+ 202  14 |   a = 1
+  52  17 |   b = 2
+
