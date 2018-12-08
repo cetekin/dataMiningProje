@@ -17,7 +17,7 @@ double calculate_std_deviation(int class_label,int k,double mean,int train[MAXIN
 void k_fold_cross_validation(int confusion_matrix[CLASSCNT][CLASSCNT],int data[MAXINSTANCE][FEATURECNT],int count,int k_val);
 
 
-int read_data_set(char line[LINESIZE], int mtr[MAXINSTANCE][FEATURECNT]) {
+int read_data_set(char line[LINESIZE], int mtr[MAXINSTANCE][FEATURECNT]) { 
 
 	FILE *myfile = fopen ( "habermanData.txt", "r" );
 	int i = 0;
