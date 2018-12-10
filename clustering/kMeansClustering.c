@@ -219,7 +219,7 @@ void find_new_centroids(int data[MAXINSTANCE][FEATURECNT],struct Centroid* centr
 int is_same(struct Centroid* centroids,struct Centroid* past_centroids,int K_value) {
 
         int i;
-        float delta = 0.001 * K_value;
+        float delta = 0.0001 * K_value;
         float sum = 0.0;
 
 
@@ -254,6 +254,7 @@ int main() {
         printf("\n\n");
 
         centroids = (struct Centroid*)malloc(sizeof(struct Centroid)*K_value);
+        int* total_cnt = (int*)calloc(K_value,sizeof(int));
 
 
         sample_cnt=read_data_set(line,data);
@@ -270,6 +271,17 @@ int main() {
         printf("Final cluster centroids: \n\n");
         for (i = 0; i < K_value; i++) {
                 printf("Centroid %d: (%f ,%f ,%f)\n",i+1,centroids[i].age,centroids[i].op_year,centroids[i].num_pos_nodes );
+        }
+
+
+        printf("Number of elements in clusters: \n\n");
+        for (i = 0; i < sample_cnt; i++) {
+
+                total_cnt[data[i][3]]++;
+        }
+
+        for (i = 0; i < K_value; i++) {
+                printf("Cluster %d: %d\n",i+1,total_cnt[i] );
         }
 
 
