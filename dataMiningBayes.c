@@ -270,6 +270,8 @@ int main(int argc, char *argv[]) {
 	printf("Total number of instances: %d\n",sum_all );
         printf("\n");
 
+	printf("Confusion Matrix: \n\n");
+
 	for (i = 0; i < 2; i++) {
 		for (j = 0; j < 2; j++) {
 

@@ -6,7 +6,8 @@
 #define MAXITER 500
 #define MAXINSTANCE 350
 #define LINESIZE 20
-#define FEATURECNT 4
+#define FEATURECNT 5
+#define CLASSCNT 2
 
 struct Centroid {
 
@@ -27,6 +28,7 @@ int k_means_clustering(struct Centroid* centroids,int data[MAXINSTANCE][FEATUREC
 float calculate_euclidean_dist(struct Centroid centroid,int sample[FEATURECNT]);
 void find_new_centroids(int data[MAXINSTANCE][FEATURECNT],struct Centroid* centroids,int K_value,int sample_cnt);
 int is_same(struct Centroid* centroids,struct Centroid* past_centroids,int K_value);
+float find_clustering_accuracy(int data[MAXINSTANCE][FEATURECNT],int K_value,int sample_cnt);
 
 
 
@@ -121,7 +123,7 @@ int k_means_clustering(struct Centroid* centroids,int data[MAXINSTANCE][FEATUREC
                 for (k = 0; k < sample_cnt; k++) {
 
                         min_dist = calculate_euclidean_dist(centroids[0],data[k]);
-                        data[k][3] = 0; //Initial cluster_no of the sample
+                        data[k][4] = 0; //Initial cluster_no of the sample
 
                         //Traversing through centroids
                         for (j = 0; j < K_value; j++) {
@@ -129,7 +131,7 @@ int k_means_clustering(struct Centroid* centroids,int data[MAXINSTANCE][FEATUREC
 
                                 if (dist < min_dist) {
                                         //Setting sample's cluster no
-                                        data[k][3] = j;
+                                        data[k][4] = j;
                                         min_dist = dist;
                                 }
                         }
@@ -189,7 +191,7 @@ void find_new_centroids(int data[MAXINSTANCE][FEATURECNT],struct Centroid* centr
 
                 for (k = 0; k < sample_cnt; k++) {
 
-                        if (data[k][3] == centroids[i].cluster_no) {
+                        if (data[k][4] == centroids[i].cluster_no) {
 
                                 cnt++;
 
@@ -238,6 +240,78 @@ int is_same(struct Centroid* centroids,struct Centroid* past_centroids,int K_val
 }
 
 
+float find_clustering_accuracy(int data[MAXINSTANCE][FEATURECNT],int K_value,int sample_cnt) {
+
+        int i,k,j,max_cnt,max_class,prev_class=0;
+        float inccorrect_percentage;
+
+        int incorrect_cnt = 0;
+
+
+        for (i = 0; i < K_value; i++) {
+                int* class_arr = (int*)calloc(CLASSCNT+1,sizeof(int));
+
+                for (k = 0; k < sample_cnt ; k++) {
+
+                        //If sample is in initial cluster
+                        if (data[k][4] == i) {
+
+                                //Incrementing the number of sample's class cnt by one in the initial cluster
+                                class_arr[data[k][3]]++;
+
+                        }
+                }
+
+                //Finding maximum in the class_arr
+                max_cnt = class_arr[0];
+                max_class = 0;
+
+                for (j = 0; j < CLASSCNT+1; j++) {
+                        if (class_arr[j] > max_cnt) {
+                                max_cnt = class_arr[j];
+                                max_class = j; // max_class is the class label that has the highest majority inn the cluster
+
+                        }
+                }
+
+                free(class_arr);
+
+                if (max_class == prev_class) {
+                        printf("Cluster majors are same!!!\n");
+                        if (prev_class == 1) {
+                                max_class = 2;
+                        }
+
+                        else {
+                                max_class = 1;
+                        }
+                }
+
+                prev_class = max_class;
+
+                //Adding wrong predictions from initial cluster to total wrong predictions incorrect_cnt
+                for (j = 0; j < sample_cnt; j++) {
+
+                        if ( (data[j][4] == i) && (data[j][3] != max_class) ) {
+                                incorrect_cnt++;
+                        }
+
+                }
+
+
+
+        }
+
+        inccorrect_percentage = (float)incorrect_cnt/sample_cnt;
+        inccorrect_percentage *= 100;
+        return inccorrect_percentage;
+
+
+}
+
+
+
+
 
 int main() {
 
@@ -277,12 +351,15 @@ int main() {
         printf("Number of elements in clusters: \n\n");
         for (i = 0; i < sample_cnt; i++) {
 
-                total_cnt[data[i][3]]++;
+                total_cnt[data[i][4]]++;
         }
 
         for (i = 0; i < K_value; i++) {
                 printf("Cluster %d: %d\n",i+1,total_cnt[i] );
         }
+
+
+        printf("Incorrectly clustered samples percentage: %f\n",find_clustering_accuracy(data,K_value,sample_cnt) );
 
 
 
